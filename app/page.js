@@ -56,8 +56,8 @@ export default function Home() {
     return (
       (book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         book.author.toLowerCase().includes(searchTerm.toLowerCase())) &&
-      (genre ? book.genre === genre : true) &&
-      (author ? book.author === author : true)
+      (genre ? book.genre.toLowerCase() === genre.toLowerCase() : true) &&
+      (author ? book.author.toLowerCase() === author.toLowerCase() : true)
     );
   });
 
@@ -90,7 +90,7 @@ export default function Home() {
           className="px-4 py-2 border border-gray-300 rounded-md"
         />
         {/* เลือก Genre */}
-        <Select value={genre} onChange={setGenre}>
+        <Select value={genre} onValueChange={setGenre}>
           <SelectTrigger className="px-4 py-2 border border-gray-300 rounded-md">
             <SelectValue placeholder="Select Genre" />
           </SelectTrigger>
@@ -101,7 +101,7 @@ export default function Home() {
         </Select>
 
         {/* เลือก Author */}
-        <Select value={author} onChange={setAuthor}>
+        <Select value={author} onValueChange={setAuthor}>
           <SelectTrigger className="px-4 py-2 border border-gray-300 rounded-md">
             <SelectValue placeholder="Select Author" />
           </SelectTrigger>
