@@ -1,0 +1,114 @@
+.container {
+  padding: 0 1rem; /* Reduced padding for tighter fit */
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #0070f3;
+  color: white;
+  padding: 1rem;
+  margin-bottom: 1rem; /* Reduced margin */
+}
+
+.title {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.cart {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+}
+
+.filters {
+  display: flex;
+  gap: 0.5rem; /* Reduced gap between filter elements */
+  margin: 0.5rem 0; /* Reduced margin */
+  flex-wrap: wrap;
+}
+
+.searchInput {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  flex-grow: 1;
+  max-width: 300px;
+}
+
+.filterSelect {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  margin: 0.5rem 0; /* Reduced margin */
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Adjusted card width */
+  gap: 0.5rem; /* Reduced gap between cards */
+  margin-bottom: 1rem; /* Reduced margin */
+}
+
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 0.5rem; /* Reduced padding inside card */
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Lighter shadow */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%; /* Ensure cards use full height */
+}
+
+.image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  margin-bottom: 0.5rem; /* Reduced margin */
+}
+
+.placeholder {
+  width: 150px;
+  height: 200px;
+  background-color: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 0.5rem; /* Reduced margin */
+  color: #888;
+}
+
+.addToCart {
+  background-color: #0070f3;
+  color: white;
+  border: none;
+  padding: 0.25rem 0.5rem; /* Reduced padding */
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: auto; /* Push button to bottom */
+}
+
+.addToCart:hover {
+  background-color: #005bb5;
+}
+
+.cartPreview {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  background-color: white;
+  border: 1px solid #ddd;
+  padding: 0.5rem; /* Reduced padding */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Lighter shadow */
+  max-height: 300px;
+  overflow-y: auto;
+}
