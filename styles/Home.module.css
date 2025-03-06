@@ -1,6 +1,9 @@
 .container {
   padding: 0 1rem;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .header {
@@ -10,12 +13,22 @@
   background-color: #0070f3;
   color: white;
   padding: 1rem;
+  width: 100%;
   margin-bottom: 1rem;
 }
 
 .title {
   margin: 0;
   font-size: 1.5rem;
+  cursor: pointer;
+  text-decoration: none; /* Explicitly remove underline */
+  color: white; /* Ensure text is white */
+}
+
+.title:hover {
+  /* Removed underline and color change */
+  /* Optional: Add a subtle effect if desired, e.g., brightness */
+  filter: brightness(1.1);
 }
 
 .cart {
@@ -29,6 +42,8 @@
   gap: 0.5rem;
   margin: 0.5rem 0;
   flex-wrap: wrap;
+  width: 100%;
+  max-width: 600px;
 }
 
 .searchInput {
@@ -36,7 +51,6 @@
   border: 1px solid #ddd;
   border-radius: 4px;
   flex-grow: 1;
-  max-width: 300px;
 }
 
 .filterSelect {
@@ -48,6 +62,9 @@
 .sectionTitle {
   font-size: 1.5rem;
   margin: 0.5rem 0;
+  width: 100%;
+  max-width: 600px;
+  text-align: left;
 }
 
 .grid {
@@ -55,6 +72,8 @@
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 0.5rem;
   margin-bottom: 1rem;
+  width: 100%;
+  max-width: 600px;
 }
 
 .card {
@@ -67,17 +86,37 @@
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
-  min-height: 350px; /* Ensure consistent height */
+  min-height: 350px;
+}
+
+.detailContainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 600px;
+}
+
+.detailCard {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 300px;
+  width: 100%;
 }
 
 .image {
-  max-width: 100%; /* Ensure image doesn't exceed container */
+  max-width: 100%;
   height: auto;
-  width: 150px; /* Fixed width to match home page */
-  height: 200px; /* Fixed height to match home page */
-  object-fit: cover; /* Maintain aspect ratio */
+  width: 150px;
+  height: 200px;
+  object-fit: cover;
   border-radius: 4px;
-  margin: 0 auto 0.5rem; /* Center and reduce margin */
+  margin-bottom: 1rem;
 }
 
 .placeholder {
@@ -87,8 +126,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 0.5rem;
+  margin-bottom: 1rem;
   color: #888;
+}
+
+.detailTitle {
+  font-size: 1.5rem;
+  margin: 0.5rem 0;
+  font-weight: bold;
 }
 
 .addToCart {
@@ -98,7 +143,7 @@
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
   cursor: pointer;
-  margin-top: auto;
+  margin-top: 1rem;
 }
 
 .addToCart:hover {

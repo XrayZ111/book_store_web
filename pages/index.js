@@ -3,28 +3,34 @@ import Link from 'next/link';
 import styles from '../styles/Home.module.css';
 
 export default function Home() {
-  const [books, setBooks] = useState([]); // Initialize as empty array
+  const [books, setBooks] = useState([]);
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [genreFilter, setGenreFilter] = useState('');
   const [authorFilter, setAuthorFilter] = useState('');
+  const [genres, setGenres] = useState([]); // New state for genres
 
   useEffect(() => {
     fetch('/api/books')
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data)) {
-          setBooks(data); // Only set if data is an array
+          setBooks(data);
+          // Extract unique genres from the data
+          const uniqueGenres = [...new Set(data.map((book) => book.genre).filter(genre => genre))];
+          setGenres(uniqueGenres);
         } else {
           console.error('API returned non-array data:', data);
-          setBooks([]); // Default to empty array if invalid
+          setBooks([]);
+          setGenres([]);
         }
         setLoading(false);
       })
       .catch((err) => {
         console.error(err);
-        setBooks([]); // Default to empty array on error
+        setBooks([]);
+        setGenres([]);
         setLoading(false);
       });
   }, []);
@@ -34,7 +40,7 @@ export default function Home() {
   };
 
   const filteredBooks = books.filter((book) => {
-    if (!book) return false; // Safety check for undefined book
+    if (!book) return false;
     const matchesSearch = book.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          book.author?.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesGenre = !genreFilter || book.genre === genreFilter;
@@ -46,9 +52,11 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
-      {/* Header */}
+      {/* Header with clickable BookStore link */}
       <header className={styles.header}>
-        <h1 className={styles.title}>BookStore</h1>
+        <Link href="/" passHref>
+          <h1 className={styles.title}>BookStore</h1>
+        </Link>
         <a href="#cart" className={styles.cart}>
           Cart ({cart.length})
         </a>
@@ -69,9 +77,11 @@ export default function Home() {
           className={styles.filterSelect}
         >
           <option value="">Select Genre</option>
-          <option value="Fiction">Fiction</option>
-          <option value="Dystopia">Dystopia</option>
-          {/* Add more genres based on your data */}
+          {genres.map((genre) => (
+            <option key={genre} value={genre}>
+              {genre}
+            </option>
+          ))}
         </select>
         <select
           value={authorFilter}
@@ -115,7 +125,7 @@ export default function Home() {
         ))}
       </div>
 
-      {/* Cart Preview (Simple for now) */}
+      {/* Cart Preview */}
       {cart.length > 0 && (
         <div id="cart" className={styles.cartPreview}>
           <h3>Cart</h3>

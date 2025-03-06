@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import Link from 'next/link'; // Import Link for navigation
 import styles from '../../styles/Home.module.css';
 
 export default function BookDetail() {
@@ -39,27 +40,32 @@ export default function BookDetail() {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.sectionTitle}>Book Details</h1>
-      <div className={styles.card}> {/* Use the same card class */}
-        {book.image_url ? (
-          <img src={book.image_url} alt={book.title} className={styles.image} />
-        ) : (
-          <div className={styles.placeholder}>150 x 200</div>
-        )}
-        <h2>{book.title}</h2>
-        <p><strong>Author:</strong> {book.author}</p>
-        <p><strong>Genre:</strong> {book.genre || 'N/A'}</p>
-        <p><strong>Price:</strong> ${parseFloat(book.price).toFixed(2)}</p>
-        <p><strong>Stock:</strong> {book.stock}</p>
-        <p><strong>Added:</strong> {new Date(book.created_at).toLocaleDateString()}</p>
-        <button
-          onClick={() => {
-            window.history.back(); // Go back after adding to cart (optional)
-          }}
-          className={styles.addToCart}
-        >
-          Add to Cart
-        </button>
+      {/* Header with clickable BookStore link */}
+      <header className={styles.header}>
+        <Link href="/" passHref>
+          <h1 className={styles.title}>BookStore</h1>
+        </Link>
+        <a href="#cart" className={styles.cart}>
+          Cart ({0}) {/* Replace with actual cart count if integrated */}
+        </a>
+      </header>
+
+      {/* Detail Content */}
+      <div className={styles.detailContainer}>
+        <div className={styles.detailCard}>
+          {book.image_url ? (
+            <img src={book.image_url} alt={book.title} className={styles.image} />
+          ) : (
+            <div className={styles.placeholder}>150 x 200</div>
+          )}
+          <h2 className={styles.detailTitle}>{book.title}</h2>
+          <p><strong>Author:</strong> {book.author}</p>
+          <p><strong>Genre:</strong> {book.genre || 'N/A'}</p>
+          <p><strong>Price:</strong> ${parseFloat(book.price).toFixed(2)}</p>
+          <p><strong>Stock:</strong> {book.stock}</p>
+          <p><strong>Added:</strong> {new Date(book.created_at).toLocaleDateString()}</p>
+          <button className={styles.addToCart}>Add to Cart</button>
+        </div>
       </div>
     </div>
   );
