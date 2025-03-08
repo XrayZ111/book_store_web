@@ -1,3 +1,4 @@
+/* Container Styles */
 .container {
   padding: 0 1rem;
   min-height: 100vh;
@@ -6,6 +7,7 @@
   align-items: center;
 }
 
+/* Header Styles */
 .header {
   display: flex;
   justify-content: space-between;
@@ -17,26 +19,33 @@
   margin-bottom: 1rem;
 }
 
-.title {
+.title,
+.signInLink,
+.cartLink {
   margin: 0;
   font-size: 1.5rem;
   cursor: pointer;
-  text-decoration: none; /* Explicitly remove underline */
-  color: white; /* Ensure text is white */
-}
-
-.title:hover {
-  /* Removed underline and color change */
-  /* Optional: Add a subtle effect if desired, e.g., brightness */
-  filter: brightness(1.1);
-}
-
-.cart {
   text-decoration: none;
   color: white;
-  font-weight: bold;
+  padding: 0.5rem 1rem; /* Add padding for button-like appearance */
+  border-radius: 4px; /* Rounded corners */
+  background-color: #0070f3; /* Match the header background */
+  display: inline-block; /* Ensure proper spacing */
 }
 
+.title:hover,
+.signInLink:hover,
+.cartLink:hover {
+  filter: brightness(1.1); /* Consistent hover effect */
+}
+
+.rightSection {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* Adjusted spacing between Sign In and Cart */
+}
+
+/* Search & Filters */
 .filters {
   display: flex;
   gap: 0.5rem;
@@ -59,6 +68,7 @@
   border-radius: 4px;
 }
 
+/* Book Grid */
 .sectionTitle {
   font-size: 1.5rem;
   margin: 0.5rem 0;
@@ -89,6 +99,7 @@
   min-height: 350px;
 }
 
+/* Product Detail */
 .detailContainer {
   display: flex;
   justify-content: center;
@@ -110,8 +121,6 @@
 }
 
 .image {
-  max-width: 100%;
-  height: auto;
   width: 150px;
   height: 200px;
   object-fit: cover;
@@ -150,6 +159,7 @@
   background-color: #005bb5;
 }
 
+/* Cart Preview */
 .cartPreview {
   position: fixed;
   bottom: 1rem;
@@ -160,4 +170,48 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   max-height: 300px;
   overflow-y: auto;
+}
+
+/* Form Styling (add or adjust) */
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 400px;
+  width: 100%;
+  padding: 2rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.formInput {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.formButton {
+  padding: 0.5rem 1rem;
+  background-color: #0070f3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.formButton:hover {
+  filter: brightness(1.1);
+}
+
+.formLink {
+  color: #0070f3;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.formLink:hover {
+  text-decoration: underline;
 }

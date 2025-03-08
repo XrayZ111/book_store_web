@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import styles from '../styles/Home.module.css';
+import { useSession, signIn, signOut } from "next-auth/react";
 
 export default function Home() {
   const [books, setBooks] = useState([]);
@@ -11,13 +12,14 @@ export default function Home() {
   const [authorFilter, setAuthorFilter] = useState('');
   const [genres, setGenres] = useState([]); // New state for genres
 
+  const { data: session } = useSession();
+
   useEffect(() => {
     fetch('/api/books')
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data)) {
           setBooks(data);
-          // Extract unique genres from the data
           const uniqueGenres = [...new Set(data.map((book) => book.genre).filter(genre => genre))];
           setGenres(uniqueGenres);
         } else {
@@ -52,14 +54,30 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
-      {/* Header with clickable BookStore link */}
+      {/* Header */}
       <header className={styles.header}>
         <Link href="/" passHref>
           <h1 className={styles.title}>BookStore</h1>
         </Link>
-        <a href="#cart" className={styles.cart}>
-          Cart ({cart.length})
-        </a>
+
+        {/* Right Section */}
+        <div className={styles.rightSection}>
+          {!session ? (
+            <a href="#" onClick={() => signIn()} className={styles.signInLink}>
+              Sign In
+            </a>
+          ) : (
+            <>
+              <span>{session.user.email}</span>
+              <a href="#" onClick={() => signOut()} className={styles.signInLink}>
+                Sign Out
+              </a>
+            </>
+          )}
+          <Link href="/cart" className={styles.cartLink}>
+            Cart ({cart.length})
+          </Link>
+        </div>
       </header>
 
       {/* Search and Filters */}
