@@ -19,6 +19,11 @@ export default function Cart() {
   }
 
   const handleCheckout = async () => {
+    if (!session) {
+      router.push('/auth/signin');
+      return;
+    }
+  
     try {
       const response = await fetch('/api/checkout', {
         method: 'POST',
@@ -27,18 +32,21 @@ export default function Cart() {
         },
         body: JSON.stringify({ cart }),
       });
-
+  
+      console.log('Checkout Response Status:', response.status); // Log the status
+      const data = await response.json(); // Attempt to parse JSON
+      console.log('Checkout Response Data:', data); // Log the response data
+  
       if (response.ok) {
         clearCart();
         alert('Checkout successful! Stock has been updated.');
-        router.push('/');
+        router.push('/'); // Redirect to homepage after checkout
       } else {
-        const data = await response.json();
         alert(data.error || 'Checkout failed');
       }
     } catch (error) {
-      console.error(error);
-      alert('An error occurred during checkout');
+      console.error('Checkout Fetch Error:', error); // Log the fetch error
+      alert(`An error occurred during checkout: ${error.message}`);
     }
   };
 

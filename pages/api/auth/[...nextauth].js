@@ -13,15 +13,24 @@ export const authOptions = {
       },
       async authorize(credentials) {
         const { email, password } = credentials;
-        const res = await pool.query(
-          "SELECT * FROM customers WHERE email = $1",
-          [email]
-        );
-        const user = res.rows[0];
-        if (!user) throw new Error("User not found");
-        const isValid = await bcrypt.compare(password, user.password_hash);
-        if (!isValid) throw new Error("Invalid password");
-        return { id: user.customer_id, email: user.email };
+        try {
+          const res = await pool.query(
+            "SELECT * FROM customers WHERE email = $1",
+            [email]
+          );
+          const user = res.rows[0];
+          if (!user) {
+            throw new Error("User not found");
+          }
+          const isValid = await bcrypt.compare(password, user.password_hash);
+          if (!isValid) {
+            throw new Error("Invalid password");
+          }
+          return { id: user.customer_id, email: user.email };
+        } catch (error) {
+          console.error("Authorize error:", error);
+          throw new Error(error.message);
+        }
       },
     }),
   ],
@@ -60,7 +69,7 @@ export const authOptions = {
       },
     },
   },
-  debug: true, // Enable debug mode to get more logs
+  debug: true,
 };
 
 export default NextAuth(authOptions);
