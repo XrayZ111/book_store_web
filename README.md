@@ -13,8 +13,11 @@ This project is a website, which allows users to purchase and sell their product
 
 ## Used tools
 - Next.js
+    - For web developer 
 - PostgreSQL
-- CSS
+    - For database management
+- Docker
+    - For server management
 
 ## Process to implement this project
 1. clone this repository
