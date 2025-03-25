@@ -36,7 +36,7 @@ NEXTAUTH_URL=http://localhost:3000
 7. look at `http:localhost:3000`
 
 ## License
-- ![[LICENSE.txt]]
+- [MIT License](LICENSE.txt)
 
 ## Meet the team
 - ก้องสกุล พันธุ์ยาง  6610505276
