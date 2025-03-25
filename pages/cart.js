@@ -1,20 +1,24 @@
 import { useCart } from '../context/CartContext';
-import { useSession } from 'next-auth/react';
+import { useSession, signIn, signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import styles from '../styles/Home.module.css';
 import Link from 'next/link';
 
 export default function Cart() {
   const { cart, clearCart } = useCart();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
 
-  const handleCheckout = async () => {
-    if (!session) {
-      router.push('/auth/signin');
-      return;
-    }
+  if (status === 'loading') {
+    return <p>Loading...</p>;
+  }
 
+  if (status === 'unauthenticated') {
+    router.push('/auth/signin');
+    return null;
+  }
+
+  const handleCheckout = async () => {
     try {
       const response = await fetch('/api/checkout', {
         method: 'POST',
@@ -27,7 +31,7 @@ export default function Cart() {
       if (response.ok) {
         clearCart();
         alert('Checkout successful! Stock has been updated.');
-        router.push('/'); // Redirect to homepage after checkout
+        router.push('/');
       } else {
         const data = await response.json();
         alert(data.error || 'Checkout failed');
@@ -42,7 +46,6 @@ export default function Cart() {
 
   return (
     <div className={styles.container}>
-      {/* Header */}
       <header className={styles.header}>
         <Link href="/" passHref>
           <h1 className={styles.title}>BookStore</h1>
@@ -66,7 +69,6 @@ export default function Cart() {
         </div>
       </header>
 
-      {/* Cart Content */}
       <h2 className={styles.sectionTitle}>Your Cart</h2>
       {cart.length === 0 ? (
         <p>Your cart is empty.</p>
