@@ -2,17 +2,19 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import styles from '../styles/Home.module.css';
 import { useSession, signIn, signOut } from "next-auth/react";
+import AddProductButton from "../components/AddProductButton";
+import { useCart } from '../context/CartContext';
 
 export default function Home() {
   const [books, setBooks] = useState([]);
-  const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [genreFilter, setGenreFilter] = useState('');
   const [authorFilter, setAuthorFilter] = useState('');
-  const [genres, setGenres] = useState([]); // New state for genres
-
+  const [genres, setGenres] = useState([]);
+  
   const { data: session } = useSession();
+  const { cart, addToCart } = useCart(); // Use CartContext instead of local state
 
   useEffect(() => {
     fetch('/api/books')
@@ -22,6 +24,7 @@ export default function Home() {
           setBooks(data);
           const uniqueGenres = [...new Set(data.map((book) => book.genre).filter(genre => genre))];
           setGenres(uniqueGenres);
+          console.log("Books fetched:", data);
         } else {
           console.error('API returned non-array data:', data);
           setBooks([]);
@@ -30,16 +33,12 @@ export default function Home() {
         setLoading(false);
       })
       .catch((err) => {
-        console.error(err);
+        console.error('Fetch error:', err);
         setBooks([]);
         setGenres([]);
         setLoading(false);
       });
   }, []);
-
-  const addToCart = (book) => {
-    setCart((prevCart) => [...prevCart, book]);
-  };
 
   const filteredBooks = books.filter((book) => {
     if (!book) return false;
@@ -59,8 +58,6 @@ export default function Home() {
         <Link href="/" passHref>
           <h1 className={styles.title}>BookStore</h1>
         </Link>
-
-        {/* Right Section */}
         <div className={styles.rightSection}>
           {!session ? (
             <a href="#" onClick={() => signIn()} className={styles.signInLink}>
@@ -75,10 +72,13 @@ export default function Home() {
             </>
           )}
           <Link href="/cart" className={styles.cartLink}>
-            Cart ({cart.length})
+            Cart ({cart.reduce((sum, item) => sum + (item.quantity || 1), 0)})
           </Link>
         </div>
       </header>
+
+      {/* Add Product Button */}
+      <AddProductButton />
 
       {/* Search and Filters */}
       <div className={styles.filters}>
@@ -129,15 +129,19 @@ export default function Home() {
               <h3>{book.title}</h3>
               <p>by {book.author}</p>
               <p>${parseFloat(book.price).toFixed(2)}</p>
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  addToCart(book);
-                }}
-                className={styles.addToCart}
-              >
-                Add to Cart
-              </button>
+              {book.stock > 0 ? (
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    addToCart(book);
+                  }}
+                  className={styles.addToCart}
+                >
+                  Add to Cart
+                </button>
+              ) : (
+                <p className={styles.outOfStock}>Out of Stock</p>
+              )}
             </div>
           </Link>
         ))}
@@ -148,9 +152,9 @@ export default function Home() {
         <div id="cart" className={styles.cartPreview}>
           <h3>Cart</h3>
           <ul>
-            {cart.map((item, index) => (
-              <li key={index}>
-                {item.title} - ${parseFloat(item.price).toFixed(2)}
+            {cart.map((item) => (
+              <li key={item.book_id}>
+                {item.title} - ${parseFloat(item.price).toFixed(2)} (x{item.quantity || 1})
               </li>
             ))}
           </ul>

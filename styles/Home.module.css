@@ -5,6 +5,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  max-width: 1200px; /* Increased from 800px */
+  margin: 0 auto;
 }
 
 /* Header Styles */
@@ -27,22 +30,22 @@
   cursor: pointer;
   text-decoration: none;
   color: white;
-  padding: 0.5rem 1rem; /* Add padding for button-like appearance */
-  border-radius: 4px; /* Rounded corners */
-  background-color: #0070f3; /* Match the header background */
-  display: inline-block; /* Ensure proper spacing */
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  background-color: #0070f3;
+  display: inline-block;
 }
 
 .title:hover,
 .signInLink:hover,
 .cartLink:hover {
-  filter: brightness(1.1); /* Consistent hover effect */
+  filter: brightness(1.1);
 }
 
 .rightSection {
   display: flex;
   align-items: center;
-  gap: 1rem; /* Adjusted spacing between Sign In and Cart */
+  gap: 1rem;
 }
 
 /* Search & Filters */
@@ -52,7 +55,7 @@
   margin: 0.5rem 0;
   flex-wrap: wrap;
   width: 100%;
-  max-width: 600px;
+  max-width: 1200px; /* Increased from 600px */
 }
 
 .searchInput {
@@ -73,7 +76,7 @@
   font-size: 1.5rem;
   margin: 0.5rem 0;
   width: 100%;
-  max-width: 600px;
+  max-width: 1200px; /* Increased from 600px */
   text-align: left;
 }
 
@@ -83,7 +86,7 @@
   gap: 0.5rem;
   margin-bottom: 1rem;
   width: 100%;
-  max-width: 600px;
+  max-width: 1200px; /* Increased from 600px */
 }
 
 .card {
@@ -104,7 +107,7 @@
   display: flex;
   justify-content: center;
   width: 100%;
-  max-width: 600px;
+  max-width: 1200px; /* Increased from 600px */
 }
 
 .detailCard {
@@ -172,7 +175,7 @@
   overflow-y: auto;
 }
 
-/* Form Styling (add or adjust) */
+/* Form Styling */
 .formContainer {
   display: flex;
   flex-direction: column;
@@ -183,6 +186,12 @@
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.formLabel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .formInput {
@@ -214,4 +223,69 @@
 
 .formLink:hover {
   text-decoration: underline;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .filters,
+  .sectionTitle,
+  .grid,
+  .detailContainer {
+    max-width: 100%; /* Full width on smaller screens */
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Smaller cards on mobile */
+  }
+}
+
+@media (min-width: 1200px) {
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Larger cards on wide screens */
+  }
+}
+
+.addProductButton {
+  padding: 0.5rem 1rem;
+  background-color: #28a745; /* Green for "add" */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.addProductButton:hover {
+  filter: brightness(1.1); /* Slightly brighter on hover */
+}
+
+.cartList {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+.cartItem {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.totalPrice {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 1rem 0;
+}
+
+.checkoutButton {
+  padding: 0.5rem 1rem;
+  background-color: #0070f3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.checkoutButton:hover {
+  filter: brightness(1.1);
 }
